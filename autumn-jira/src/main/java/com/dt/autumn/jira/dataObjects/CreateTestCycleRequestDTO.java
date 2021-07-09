@@ -1,0 +1,38 @@
+package com.dt.autumn.jira.dataObjects;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
+import lombok.experimental.Accessors;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Accessors(chain = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class CreateTestCycleRequestDTO {
+
+    @JsonProperty("clonedCycleId")
+    private String clonedCycleId;
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("build")
+    private String build;
+    @JsonProperty("environment")
+    private String environment;
+    @JsonProperty("description")
+    private String description;
+    @JsonProperty("startDate")
+    private String startDate;
+    @JsonProperty("endDate")
+    private String endDate;
+    @JsonProperty("projectId")
+    private String projectId;
+    @JsonProperty("versionId")
+    private String versionId;
+    @JsonProperty("sprintId")
+    private String sprintId;
+
+}
