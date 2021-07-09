@@ -16,6 +16,16 @@
         <module>autumn-ui</module>
         <module>autumn-executors</module>
     </modules>
+    <inceptionYear>2021</inceptionYear>
+    <organization>
+        <name>Deutsche Telekom AG</name>
+    </organization>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
 
 
     <properties>
