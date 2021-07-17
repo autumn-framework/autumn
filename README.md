@@ -18,17 +18,10 @@
 
 Autumn is a Java Based Framework that integrates with the Cucumber and Testng frameworks, around which any kind of API and UI based Test Cases can be automated. It abstracts away much of the boilerplate code keeping the Test Scenarios at High Level.
 
-## Development
-
-_TBD_
-
-### Build
-
-_TBD_
-
 ## Documentation
 
-The full documentation for the telekom can be found in _TBD_
+The full documentation for the telekom can be found in 
+https://medium.com/deutsche-telekom-gurgaon/autumn-ed67db1fb02e
 
 ## Support and Feedback
 The following channels are available for discussions, feedback, and support requests:
