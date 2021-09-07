@@ -24,7 +24,7 @@ import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
 
 public class RetryAnalyzer implements IRetryAnalyzer {
-    static int RETRYLIMIT = 2;
+    static int RETRYLIMIT = 0;
     int counter = 0;
 
     public static void setRetryLimit(int retryLimit) {

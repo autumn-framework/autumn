@@ -116,10 +116,10 @@ public class Logger {
     }
 
     /**
-     * Try and avoid the use of the same
+     * Logger for capturing the exception stack trace
      *
-     * @param status
-     * @param throwable
+     * @param status : Test Case Status
+     * @param throwable :- Exception stack trace
      */
     public synchronized static void logException(Status status, Throwable throwable) {
         if (ExtentManager.getTest().get() != null)
@@ -127,6 +127,11 @@ public class Logger {
         logInfoInLogger(throwable.toString());
     }
 
+    /**
+     *Logger for capturing the category/group of the testcase
+     *
+     * @param category : Category/Group of the TestCase
+     */
     public synchronized static void logCategory(String category) {
         if (ExtentManager.getTest().get() != null)
             ExtentManager.getTest().get().assignCategory(category);

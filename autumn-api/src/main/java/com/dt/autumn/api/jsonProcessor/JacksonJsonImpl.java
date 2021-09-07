@@ -174,13 +174,52 @@ public class JacksonJsonImpl {
         return jsonMap;
     }
 
-
+    /**
+     * coverting Object to Json and then json to byte[]
+     *
+     * @param t
+     * @param <T>
+     * @return
+     * @throws IOException
+     */
     public <T> byte[] toJSonByte(T t) throws IOException {
+        String json = new ObjectMapper().writeValueAsString(t);
+        return toJSonByte(json);
+    }
+
+
+    /**
+     * Coverting json to byte[]
+     *
+     * @param json
+     * @param <T>
+     * @return
+     * @throws IOException
+     */
+    public <T> byte[] toJSonByte(String json) throws IOException {
         try {
-            String json = new ObjectMapper().writeValueAsString(t);
-            byte[] b = getMessagePackObjectMapper().writeValueAsBytes(getObjectMapper().readValue(json, Object.class));
+            byte[] b = getObjectMapper().writeValueAsBytes(getObjectMapper().readValue(json, Object.class));
 
             return b;
+        } catch (JsonGenerationException jge) {
+            throw jge;
+        }
+    }
+
+
+    /**
+     * coverting Object to Json and then json to byte[] using message pack.
+     *
+     * @param t
+     * @param <T>
+     * @return
+     * @throws IOException
+     */
+    public <T> byte[] toMsgPackByte(T t) throws IOException {
+        try {
+            String json = new ObjectMapper().writeValueAsString(t);
+            return toMsgPackByte(json);
+
         } catch (JsonGenerationException jge) {
             throw jge;
         } catch (JsonMappingException jme) {
@@ -190,7 +229,16 @@ public class JacksonJsonImpl {
         }
     }
 
-    public <T> byte[] toJSonByte(String json) throws IOException {
+
+    /**
+     * Coverting json to byte[] using message pack
+     *
+     * @param json
+     * @param <T>
+     * @return
+     * @throws IOException
+     */
+    public <T> byte[] toMsgPackByte(String json) throws IOException {
         try {
             byte[] b = getMessagePackObjectMapper().writeValueAsBytes(getObjectMapper().readValue(json, Object.class));
 

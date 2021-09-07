@@ -67,7 +67,7 @@ public class ReportingCucumberListener extends ReportingCommonListener implement
         String scenarioStatus=scenario.getStatus().toUpperCase();
         setTCCompletionDTO(scenario);
 
-        if(AnnotationTransformer.getRetryFlag()){
+        if(RetryAnalyzer.RETRYLIMIT>0){
             if(scenarioStatus.equals("PASSED"))
                 checkPassedRetryScenarios(scenario);
             else

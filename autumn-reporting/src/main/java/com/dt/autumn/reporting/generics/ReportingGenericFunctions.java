@@ -25,7 +25,7 @@ import com.dt.autumn.reporting.emailReporting.EmailSend;
 import com.dt.autumn.reporting.emailReporting.EmailSummary;
 import com.dt.autumn.reporting.extentReport.ExtentManager;
 import com.dt.autumn.reporting.globals.GlobalVariables;
-import com.dt.autumn.reporting.listeners.AnnotationTransformer;
+import com.dt.autumn.reporting.listeners.RetryListener;
 import com.dt.autumn.reporting.listeners.RetryAnalyzer;
 import com.dt.autumn.reporting.microsoftTeamsNotification.SendMessage;
 import com.dt.autumn.reporting.perfStatusReport.CreateAPIPerfReport;
@@ -138,8 +138,7 @@ public class ReportingGenericFunctions {
         sendSlackMessage.webHookPostMessage(uri);
     }
 
-    public static void initRetryListener(int retryCount, Boolean retryFlag){
-        AnnotationTransformer.setRetryFlag(retryFlag);
+    public static void initRetryListener(int retryCount){
         RetryAnalyzer.setRetryLimit(retryCount);
 
     }
