@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.dt</groupId>
+    <groupId>com.autumn-framework</groupId>
     <artifactId>autumn</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
@@ -51,7 +51,7 @@
         <org.slf4j.version>1.7.30</org.slf4j.version>
         <io.github.bonigarcia.version>4.2.0</io.github.bonigarcia.version>
         <org.jasypt.version>1.9.3</org.jasypt.version>
-        <org.bouncycastle.version>1.66</org.bouncycastle.version>
+        <org.bouncycastle.version>1.69</org.bouncycastle.version>
         <cucumber.version>1.2.5</cucumber.version>
     </properties>
 
@@ -106,32 +106,32 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.dt</groupId>
+                <groupId>com.autumn-framework</groupId>
                 <artifactId>autumn-reporting</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.dt</groupId>
+                <groupId>com.autumn-framework</groupId>
                 <artifactId>autumn-utils</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.dt</groupId>
+                <groupId>com.autumn-framework</groupId>
                 <artifactId>autumn-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.dt</groupId>
+                <groupId>com.autumn-framework</groupId>
                 <artifactId>autumn-jira</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.dt</groupId>
+                <groupId>com.autumn-framework</groupId>
                 <artifactId>autumn-ui</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.dt</groupId>
+                <groupId>com.autumn-framework</groupId>
                 <artifactId>autumn-executors</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -315,7 +315,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>4.13.2</version>
         </dependency>
         <dependency>
             <groupId>org.apache.kafka</groupId>
