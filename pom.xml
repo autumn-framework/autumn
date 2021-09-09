@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.dt</groupId>
+    <groupId>com.autumn-framework</groupId>
     <artifactId>autumn</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
@@ -106,32 +106,32 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.dt</groupId>
+                <groupId>com.autumn-framework</groupId>
                 <artifactId>autumn-reporting</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.dt</groupId>
+                <groupId>com.autumn-framework</groupId>
                 <artifactId>autumn-utils</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.dt</groupId>
+                <groupId>com.autumn-framework</groupId>
                 <artifactId>autumn-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.dt</groupId>
+                <groupId>com.autumn-framework</groupId>
                 <artifactId>autumn-jira</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.dt</groupId>
+                <groupId>com.autumn-framework</groupId>
                 <artifactId>autumn-ui</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.dt</groupId>
+                <groupId>com.autumn-framework</groupId>
                 <artifactId>autumn-executors</artifactId>
                 <version>${project.version}</version>
             </dependency>
