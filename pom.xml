@@ -51,7 +51,7 @@
         <org.slf4j.version>1.7.30</org.slf4j.version>
         <io.github.bonigarcia.version>4.2.0</io.github.bonigarcia.version>
         <org.jasypt.version>1.9.3</org.jasypt.version>
-        <org.bouncycastle.version>1.66</org.bouncycastle.version>
+        <org.bouncycastle.version>1.69</org.bouncycastle.version>
         <cucumber.version>1.2.5</cucumber.version>
     </properties>
 
@@ -315,7 +315,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>4.13.2</version>
         </dependency>
         <dependency>
             <groupId>org.apache.kafka</groupId>
