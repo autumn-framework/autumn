@@ -32,7 +32,6 @@ import java.util.Calendar;
 public class ServerReporterPath {
 	private static File reportFolderPath;
 	private static String jenkinsReport,jenkinsLog,jenkinsAPIPerfReport;
-	private static File AutomationReportFileName,LogFileName,APIPerfReportFileName;
 	private static String reportBaseDirectory;
 	private static String reportServerIp;
 	private static String reportFolderName;
@@ -70,73 +69,21 @@ public class ServerReporterPath {
 		return ServerReporterPath.jenkinsLog;
 	}
 
-	public static void moveReportToJenkins(){
-		String folderName = reportFolderName + "-" + getCurrentDateTime("dd-MMM-HH-mm-ss");
-		reportFolderPath = new File(jenkinsReportLoc + folderName );
+	public static void createDirectory(){
+		reportFolderName = reportFolderName + "-" + getCurrentDateTime("dd-MMM-HH-mm-ss");
+		reportFolderPath = new File(jenkinsReportLoc + reportFolderName );
 		reportFolderPath.mkdir();
-		moveAutomationReportInServer();
-		moveLogInServer();
-		if(CreateAPIPerfReport.getApiPerfReport())
-			movePerformanceStatusReport();
-		File sourceFolder = new File(ServerReporterPath.getReportBaseDirectory());
-		sourceFolder.delete();
-		jenkinsReport = reportServerIp + folderName + "/" + ExtentManager.getReportName()+".html";
-		jenkinsAPIPerfReport = reportServerIp + folderName + "/" + CreateAPIPerfReport.getApiPerfReportFileName()+".html";
-		jenkinsLog=reportServerIp+folderName+"/"+ExtentManager.getLoggerName()+".log";
+		setReportBaseDirectory(reportFolderPath.getAbsolutePath()+"/");
 
 	}
 
-	private static void moveAutomationReportInServer(){
-		try{
-
-			File file = new File(reportFolderPath.getPath());
-			AutomationReportFileName = file.createTempFile(ExtentManager.getReportName(), ".html", file);
-			File sourceFile = new File(ExtentManager.getExtentReportLocation());
-			if (sourceFile.exists()) {
-				FileUtils.copyFile(sourceFile, AutomationReportFileName);
-				File AutomationReportFile = new File(reportFolderPath.getPath() + "/"+ExtentManager.getReportName()+".html");
-				AutomationReportFileName.renameTo(AutomationReportFile);
-				if (sourceFile.exists())
-					sourceFile.delete();
-			}
-		}
-		catch (Exception e){
-			e.printStackTrace();
-		}
-	}
-
-	private static void movePerformanceStatusReport(){
-		try{
-			File file = new File(reportFolderPath.getPath());
-			APIPerfReportFileName = file.createTempFile(CreateAPIPerfReport.getApiPerfReportFileName(), ".html", file);
-			File sourceFile = new File(CreateAPIPerfReport.getAPIPerfReportPath());
-			if (sourceFile.exists()) {
-				FileUtils.copyFile(sourceFile, APIPerfReportFileName);
-				File APIPerfReportFile = new File(reportFolderPath.getPath() + "/"+CreateAPIPerfReport.getApiPerfReportFileName()+".html");
-				APIPerfReportFileName.renameTo(APIPerfReportFile);
-				if (sourceFile.exists())
-					sourceFile.delete();
-			}
-		}
-		catch (Exception e){
-			e.printStackTrace();
-		}
-	}
-
-	private static void moveLogInServer(){
-		try{
-			File file = new File(reportFolderPath.getPath());
-			LogFileName = file.createTempFile(ExtentManager.getLoggerName(), ".log", file);
-			File sourceFile = new File(ServerReporterPath.getReportBaseDirectory(), ExtentManager.getLoggerName()+".log");
-			if (sourceFile.exists()) {
-				FileUtils.copyFile(sourceFile, LogFileName);
-				File LogFile = new File(reportFolderPath.getPath() + "/"+ExtentManager.getLoggerName()+".log");
-				LogFileName.renameTo(LogFile);
-			}
-		}
-		catch (Exception e){
-			e.printStackTrace();
-		}
+	public static void createReportLinks(){
+		jenkinsReport = reportServerIp + reportFolderName + "/" + ExtentManager.getReportName() ;
+		System.out.println("Extent Report Location :- " + jenkinsReport);
+		jenkinsAPIPerfReport = reportServerIp + reportFolderName + "/" + CreateAPIPerfReport.getApiPerfReportFileName();
+		System.out.println("API Performance Report Location :- " + jenkinsAPIPerfReport);
+		jenkinsLog = reportServerIp + reportFolderName + "/" + ExtentManager.getLoggerName() ;
+		System.out.println("Log File Location :- " + jenkinsLog);
 	}
 
 	public static void moveLogFileToReportDirectory() {

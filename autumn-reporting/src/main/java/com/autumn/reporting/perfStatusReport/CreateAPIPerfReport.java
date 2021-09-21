@@ -33,7 +33,7 @@ public class CreateAPIPerfReport {
 
     public static String APIPerfReportPath;
     private static Boolean apiPerfReport = false;
-    private static String apiPerfReportFileName = "PerformanceSuiteReport";
+    private static String apiPerfReportFileName = "PerformanceSuiteReport.html";
 
 
     public static void setApiPerfReport(Boolean apiPerfReport) {
@@ -42,10 +42,6 @@ public class CreateAPIPerfReport {
 
     public static Boolean getApiPerfReport() {
         return apiPerfReport;
-    }
-
-    public static String getAPIPerfReportPath() {
-        return APIPerfReportPath;
     }
 
     public static String getApiPerfReportFileName() {
@@ -57,20 +53,10 @@ public class CreateAPIPerfReport {
     }
 
     public static void createHTMLReport(String apiPerfReportFileName, String apiPerfReportTitle) {
-        setApiPerfReportFileName(apiPerfReportFileName);
-        File destFolderPath = new File(ServerReporterPath.getReportBaseDirectory() + "/APIPerf");
-        try {
-            if (destFolderPath.mkdir()) {
-            } else {
-                FileUtils.forceDelete(destFolderPath);
-                destFolderPath.mkdir();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        File file = null;
-        try {
-            file = new File(destFolderPath, apiPerfReportFileName);
+        setApiPerfReportFileName(apiPerfReportFileName+ ".html");
+        File destFolderPath = new File(ServerReporterPath.getReportBaseDirectory());
+       try {
+            File file = new File(destFolderPath, getApiPerfReportFileName());
             file.createNewFile();
             APIPerfReportPath = file.getAbsolutePath();
             FileOutputStream consolidateHtmlFile = new FileOutputStream(file, true);

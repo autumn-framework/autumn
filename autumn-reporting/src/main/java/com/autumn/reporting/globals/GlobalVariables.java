@@ -36,7 +36,6 @@ public class GlobalVariables {
     public static final String TESTTYPE;
     //Values can be methods, system, package, group, class
     public static final String SUITETYPE;
-    public static final String REPORT_BASE_PACKAGE = "reports/Automation";
 
 
     static {

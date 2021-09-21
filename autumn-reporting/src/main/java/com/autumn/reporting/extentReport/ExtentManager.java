@@ -60,7 +60,7 @@ public class ExtentManager {
     private static ThreadLocal<LinkedList<Markup>> extentTestBefore = new ThreadLocal<>();
     private static String extentReportLocation;
     private static final String OUTPUT_FOLDER_SCREENSHOTS = "screenshots/";
-    private static String reportName = "AutomationSuiteReport";
+    private static String reportName = "AutomationSuiteReport.html";
     private static Boolean loggingEnabled = true;
     private static String loggerName = "LoggerFile";
 
@@ -92,7 +92,7 @@ public class ExtentManager {
     }
 
     public static void setLoggerName(String loggerName) {
-        ExtentManager.loggerName = loggerName;
+        ExtentManager.loggerName = loggerName ;
     }
 
     public static String getReportName() {
@@ -133,12 +133,10 @@ public class ExtentManager {
     }
 
     public synchronized static ExtentReports createInstance(String documentTitle, boolean removeRetriedTests, boolean addScreenshotsToReport, String reportName) {
-        setReportName(reportName);
-        if (ServerReporterPath.getReportBaseDirectory() == null)
-            ServerReporterPath.setReportBaseDirectory(GlobalVariables.REPORT_BASE_PACKAGE + "-" + ServerReporterPath.getCurrentDateTime("dd-MMM-HH-mm-ss") + "/");
+        setReportName(reportName + ".html");
         setRemoveRetriedTests(removeRetriedTests);
         setAddScreenshotsToReport(addScreenshotsToReport);
-        setExtentReportLocation(ServerReporterPath.getReportBaseDirectory() + reportName + ".html");
+        setExtentReportLocation(ServerReporterPath.getReportBaseDirectory() + getReportName());
         ExtentSparkReporter sparkReporter = new ExtentSparkReporter(getExtentReportLocation());
         sparkReporter.config().setTheme(Theme.DARK);
         sparkReporter.config().setTimelineEnabled(true);

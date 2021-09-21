@@ -64,7 +64,7 @@ public class ReportingGenericFunctions {
         EmailSummary.setReportLoginUser(reportLoginUser);
         EmailSummary.setReportLoginPassword(reportLoginPassword);
         if (!moveToJenkinsLoc) {
-            ServerReporterPath.moveReportToJenkins();
+            ServerReporterPath.createReportLinks();
             moveToJenkinsLoc = true;
         }
         EmailSummary.emailHtml();
@@ -76,7 +76,7 @@ public class ReportingGenericFunctions {
         EmailSummary.setReportLoginUser(null);
         EmailSummary.setReportLoginPassword(null);
         if (!moveToJenkinsLoc) {
-            ServerReporterPath.moveReportToJenkins();
+            ServerReporterPath.createReportLinks();
             moveToJenkinsLoc = true;
         }
         EmailSummary.emailHtml();
@@ -87,6 +87,7 @@ public class ReportingGenericFunctions {
         ServerReporterPath.setReportServerIp(reportServerIp);
         ServerReporterPath.setJenkinsReportLoc(jenkinsReportLoc);
         ServerReporterPath.setReportFolderName(reportFolderName);
+        ServerReporterPath.createDirectory();
     }
 
     public static void initAPIPerfReporter(String apiPerfReportFileName, String apiPerfReportTitle){
@@ -117,7 +118,7 @@ public class ReportingGenericFunctions {
 
     public static void initMicrosoftTeamsNotification(String uri, String environment, String summary) {
         if (!moveToJenkinsLoc) {
-            ServerReporterPath.moveReportToJenkins();
+            ServerReporterPath.createReportLinks();
             moveToJenkinsLoc = true;
         }
         SendMessage sendMessage = new SendMessage();
@@ -128,7 +129,7 @@ public class ReportingGenericFunctions {
 
     public static void initSlackNotification(String uri, String environment, String summary) {
         if (!moveToJenkinsLoc) {
-            ServerReporterPath.moveReportToJenkins();
+            ServerReporterPath.createReportLinks();
             moveToJenkinsLoc = true;
         }
         SendSlackMessage sendSlackMessage = new SendSlackMessage();
