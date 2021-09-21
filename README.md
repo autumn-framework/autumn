@@ -22,12 +22,13 @@ Autumn is a Java Based Framework that integrates with the Cucumber and Testng fr
 ## Dependencies
 
 <b>Autumn API Dependency</b>
+```
 <dependency>
     <groupId>io.github.autumn-framework</groupId>
     <artifactId>autumn-api</artifactId>
     <version>1.0.0</version>
 </dependency>
-
+```
 <b>Autumn Executor Dependency</b>
 <dependency>
     <groupId>io.github.autumn-framework</groupId>
