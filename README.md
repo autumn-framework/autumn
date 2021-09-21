@@ -74,6 +74,10 @@ Autumn is a Java Based Framework that integrates with the Cucumber and Testng fr
 The full documentation for the telekom can be found in 
 https://medium.com/deutsche-telekom-gurgaon/autumn-ed67db1fb02e
 
+## Sample Projects
+
+TestNG + RestAssured Project :- https://github.com/autumn-framework/AutumnAPITestNgDemo
+
 ## Support and Feedback
 The following channels are available for discussions, feedback, and support requests:
 
