@@ -82,7 +82,7 @@ public class ServerReporterPath {
 		System.out.println("Extent Report Location :- " + jenkinsReport);
 		jenkinsAPIPerfReport = reportServerIp + reportFolderName + "/" + CreateAPIPerfReport.getApiPerfReportFileName();
 		System.out.println("API Performance Report Location :- " + jenkinsAPIPerfReport);
-		jenkinsLog = reportServerIp + reportFolderName + "/" + ExtentManager.getLoggerName() ;
+		jenkinsLog = reportServerIp + reportFolderName + "/" + ExtentManager.getLoggerName() + ".log" ;
 		System.out.println("Log File Location :- " + jenkinsLog);
 	}
 
