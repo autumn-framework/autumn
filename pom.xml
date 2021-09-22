@@ -7,7 +7,7 @@
     <groupId>io.github.autumn-framework</groupId>
     <artifactId>autumn</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <modules>
         <module>autumn-reporting</module>
         <module>autumn-utils</module>
@@ -58,7 +58,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <compiler.version>13</compiler.version>
+        <compiler.version>11</compiler.version>
         <buildNumber>${maven.build.timestamp}</buildNumber>
         <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
         <io.rest-assured.version>4.3.1</io.rest-assured.version>
