@@ -74,7 +74,7 @@ public class ServerReporterPath {
 		reportFolderPath = new File(jenkinsReportLoc + reportFolderName );
 		reportFolderPath.mkdir();
 		setReportBaseDirectory(reportFolderPath.getAbsolutePath()+"/");
-
+		System.out.println("Report Folder Path :- " + reportFolderPath.getAbsolutePath());
 	}
 
 	public static void createReportLinks(){
