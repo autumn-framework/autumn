@@ -18,10 +18,65 @@
 
 Autumn is a Java Based Framework that integrates with the Cucumber and Testng frameworks, around which any kind of API and UI based Test Cases can be automated. It abstracts away much of the boilerplate code keeping the Test Scenarios at High Level.
 
+
+## Dependencies
+
+<b>Autumn API Dependency</b>
+```
+<dependency>
+    <groupId>io.github.autumn-framework</groupId>
+    <artifactId>autumn-api</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+<b>Autumn Executor Dependency</b>
+```
+<dependency>
+    <groupId>io.github.autumn-framework</groupId>
+    <artifactId>autumn-executors</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+<b>Autumn Reporting Dependency</b>
+```
+<dependency>
+    <groupId>io.github.autumn-framework</groupId>
+    <artifactId>autumn-reporting</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+<b>Autumn Jira Dependency</b>
+```
+<dependency>
+    <groupId>io.github.autumn-framework</groupId>
+    <artifactId>autumn-jira</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+<b>Autumn Utils Dependency</b>
+```
+<dependency>
+    <groupId>io.github.autumn-framework</groupId>
+    <artifactId>autumn-utils</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+<b>Autumn UI Dependency</b>
+```
+<dependency>
+    <groupId>io.github.autumn-framework</groupId>
+    <artifactId>autumn-ui</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
 ## Documentation
 
 The full documentation for the telekom can be found in 
 https://medium.com/deutsche-telekom-gurgaon/autumn-ed67db1fb02e
+
+## Sample Projects
+
+TestNG + RestAssured Project :- https://github.com/autumn-framework/AutumnAPITestNgDemo
 
 ## Support and Feedback
 The following channels are available for discussions, feedback, and support requests:
