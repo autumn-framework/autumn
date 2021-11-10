@@ -20,15 +20,15 @@ package com.autumn.utils.exceptions;
  * #L%
  */
 
-public class MessageNotFoundInKaftkaConsumerException extends RuntimeException {
-    public MessageNotFoundInKaftkaConsumerException() {
+public class MessageNotFoundInKafkaConsumerException extends RuntimeException {
+    public MessageNotFoundInKafkaConsumerException() {
     }
 
-    private MessageNotFoundInKaftkaConsumerException(String var1) {
+    private MessageNotFoundInKafkaConsumerException(String var1) {
         super(var1);
     }
 
-    public MessageNotFoundInKaftkaConsumerException(Object var1) {
+    public MessageNotFoundInKafkaConsumerException(Object var1) {
         this(String.valueOf(var1));
         if (var1 instanceof Throwable) {
             this.initCause((Throwable)var1);
@@ -36,31 +36,31 @@ public class MessageNotFoundInKaftkaConsumerException extends RuntimeException {
 
     }
 
-    public MessageNotFoundInKaftkaConsumerException(boolean var1) {
+    public MessageNotFoundInKafkaConsumerException(boolean var1) {
         this(String.valueOf(var1));
     }
 
-    public MessageNotFoundInKaftkaConsumerException(char var1) {
+    public MessageNotFoundInKafkaConsumerException(char var1) {
         this(String.valueOf(var1));
     }
 
-    public MessageNotFoundInKaftkaConsumerException(int var1) {
+    public MessageNotFoundInKafkaConsumerException(int var1) {
         this(String.valueOf(var1));
     }
 
-    public MessageNotFoundInKaftkaConsumerException(long var1) {
+    public MessageNotFoundInKafkaConsumerException(long var1) {
         this(String.valueOf(var1));
     }
 
-    public MessageNotFoundInKaftkaConsumerException(float var1) {
+    public MessageNotFoundInKafkaConsumerException(float var1) {
         this(String.valueOf(var1));
     }
 
-    public MessageNotFoundInKaftkaConsumerException(double var1) {
+    public MessageNotFoundInKafkaConsumerException(double var1) {
         this(String.valueOf(var1));
     }
 
-    public MessageNotFoundInKaftkaConsumerException(String var1, Throwable var2) {
+    public MessageNotFoundInKafkaConsumerException(String var1, Throwable var2) {
         super(var1, var2);
     }
 }
