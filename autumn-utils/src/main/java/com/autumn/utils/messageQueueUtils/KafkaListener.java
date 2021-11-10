@@ -20,7 +20,7 @@ package com.autumn.utils.messageQueueUtils;
  * #L%
  */
 
-import com.autumn.utils.exceptions.MessageNotFoundInKaftkaConsumerException;
+import com.autumn.utils.exceptions.MessageNotFoundInKafkaConsumerException;
 import com.autumn.reporting.extentReport.Logger;
 import org.apache.avro.generic.GenericDatumReader;
 import org.apache.avro.generic.GenericRecord;
@@ -38,28 +38,28 @@ import java.util.Collections;
 import java.util.Properties;
 
 
-public class KaftkaListener {
+public class KafkaListener {
 
-    private static volatile KaftkaListener instance;
+    private static volatile KafkaListener instance;
 
-    private KaftkaListener() {
+    private KafkaListener() {
     }
 
-    public static KaftkaListener getInstance() {
+    public static KafkaListener getInstance() {
         if (instance == null) {
-            synchronized (KaftkaListener.class) {
+            synchronized (KafkaListener.class) {
                 if (instance == null) {
-                    instance = new KaftkaListener();
+                    instance = new KafkaListener();
                 }
             }
         }
         return instance;
     }
 
-    public Consumer<String, byte[]> createConsumer(String KaftkaConsumer,String KaftkaTopic,String KaftkaBootstapServer) {
+    public Consumer<String, byte[]> createConsumer(String KafkaConsumer,String KafkaTopic,String KafkaBootstapServer) {
         final Properties props = new Properties();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, KaftkaBootstapServer);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, KaftkaConsumer);
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaBootstapServer);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, KafkaConsumer);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ByteArrayDeserializer.class.getName());
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG,"earliest");
@@ -68,16 +68,16 @@ public class KaftkaListener {
         // Create the consumer using props.
         final Consumer<String, byte[]> consumer = new KafkaConsumer<>(props);
         // Subscribe to the topic.
-        consumer.subscribe(Collections.singletonList(KaftkaTopic));
+        consumer.subscribe(Collections.singletonList(KafkaTopic));
         Logger.logInfoInLogger("Consumer connection done");
         return consumer;
     }
 
-    public synchronized ArrayList<String> runConsumer(String KaftkaConsumer,String KaftkaTopic,String KaftkaBootstapServer,Schema schema) throws IOException {
-        captureKaftkaDetails(KaftkaTopic,KaftkaConsumer,KaftkaBootstapServer);
-        Logger.logInfoInLogger("Running Consumer --- " +KaftkaConsumer+" on Topic "+KaftkaTopic);
+    public synchronized ArrayList<String> runConsumer(String KafkaConsumer,String KafkaTopic,String KafkaBootstapServer,Schema schema) throws IOException {
+        captureKafkaDetails(KafkaTopic,KafkaConsumer,KafkaBootstapServer);
+        Logger.logInfoInLogger("Running Consumer --- " +KafkaConsumer+" on Topic "+KafkaTopic);
         ArrayList<String> consumerRecord= new ArrayList<String >();
-        final Consumer<String, byte[]> consumer = createConsumer(KaftkaConsumer,KaftkaTopic,KaftkaBootstapServer);
+        final Consumer<String, byte[]> consumer = createConsumer(KafkaConsumer,KafkaTopic,KafkaBootstapServer);
         final int giveUp = 100;   int noRecordsCount = 0;
         while (true) {
             final ConsumerRecords<String, byte[]> consumerRecords =
@@ -103,16 +103,16 @@ public class KaftkaListener {
             consumer.commitAsync();
         }
         consumer.close();
-        capturekaftkaConsumerMessages(consumerRecord);
+        capturekafkaConsumerMessages(consumerRecord);
         Logger.logInfoInLogger("DONE");
         return consumerRecord;
     }
 
-    public void captureKaftkaDetails(String KaftkaTopic,String KaftkaConsumer,String KaftkaBootstapServer){
-        Logger.logInfo("Kaftka details are :<br> Bootstrap Server : "+ KaftkaBootstapServer+"<br>Kaftka Topic : "+KaftkaTopic+"<br>KaftkaConsumer : "+KaftkaConsumer);
+    public void captureKafkaDetails(String KafkaTopic,String KafkaConsumer,String KafkaBootstapServer){
+        Logger.logInfo("Kaftka details are :<br> Bootstrap Server : "+ KafkaBootstapServer+"<br>Kaftka Topic : "+KafkaTopic+"<br>KaftkaConsumer : "+KafkaConsumer);
     }
 
-    public void capturekaftkaConsumerMessages(ArrayList<String> consumerRecord){
+    public void capturekafkaConsumerMessages(ArrayList<String> consumerRecord){
         if(consumerRecord.size()!=0){
             String message="";
             for (int i=0;i<consumerRecord.size();i++ ){
@@ -122,7 +122,7 @@ public class KaftkaListener {
         }
     }
 
-    public void logkaftkaConsumerMessages(ArrayList<String> consumerRecord){
+    public void logkafkaConsumerMessages(ArrayList<String> consumerRecord){
         if(consumerRecord.size()!=0){
             String message="";
             for (int i=0;i<consumerRecord.size();i++ ){
@@ -132,21 +132,21 @@ public class KaftkaListener {
         }
     }
 
-    public void captureSpecifickaftkaConsumerMessage(ArrayList<String> consumerRecord,String uniqueKey){
-        int i= KaftkaListener.getInstance().getIndexofKaftkaConsumerMessage(consumerRecord,uniqueKey);
+    public void captureSpecifickafkaConsumerMessage(ArrayList<String> consumerRecord,String uniqueKey){
+        int i= KafkaListener.getInstance().getIndexofKafkaConsumerMessage(consumerRecord,uniqueKey);
         Logger.logInfo("Message stored in Kaftka consumer :<br> "+consumerRecord.get(i));
 
     }
 
-    public int getIndexofKaftkaConsumerMessage(ArrayList<String> kaftkaRecord, String uniqueKey){
+    public int getIndexofKafkaConsumerMessage(ArrayList<String> kafkaRecord, String uniqueKey){
         int i;
-        for (i=0;i<kaftkaRecord.size();i++){
-            if(kaftkaRecord.get(i).contains(uniqueKey))
+        for (i=0;i<kafkaRecord.size();i++){
+            if(kafkaRecord.get(i).contains(uniqueKey))
                 return i;
-            if(i==kaftkaRecord.size()-1)
-                throw new MessageNotFoundInKaftkaConsumerException(" Message not found in Kaftka Consumer ");
+            if(i==kafkaRecord.size()-1)
+                throw new MessageNotFoundInKafkaConsumerException(" Message not found in Kaftka Consumer ");
         }
-        throw new MessageNotFoundInKaftkaConsumerException(" Message not found in Kaftka Consumer ");
+        throw new MessageNotFoundInKafkaConsumerException(" Message not found in Kaftka Consumer ");
     }
 
 }
