@@ -39,51 +39,46 @@ import io.restassured.specification.RequestSpecification;
 
 import java.io.File;
 import java.security.KeyStore;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
-
 import static io.restassured.RestAssured.given;
 
 public class BaseApi {
 
-    private RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder();
-    private MethodType method;
-    private Object body;
-    private ContentType contentType;
-    private String baseUri;
-    private Map<String, Object> pathParams = new HashMap<>();
-    private Map<String, Object> queryParams = new HashMap<>();
-    private Map<String, Object> formURLEncoded = new HashMap<>();
-    private Map<String, Object> params = new HashMap<>();
-    private String basePath;
-    private String cookie;
-    private Map<String, Object> headers = new HashMap<>();
-    private Response response;
-    private JsonPath jsonPathevaluator;
-    private Boolean captureAPIDetails = true;
-    private Boolean redirectFlag = true;
-    private KeyStore keyStore;
-    private String certificatePassphrase;
-    private String certificateName;
-    private Boolean mtlsCertificateflag = false;
-    private String jsonResponseSchema = "";
+
+    private static Vector<BaseApiBuilder> baseApiBuilderThreadPool =
+            new Vector<BaseApiBuilder>();
+
+    private static ThreadLocal<BaseApiBuilder> baseApiBuildersThreads = new ThreadLocal<BaseApiBuilder>() {
+        @Override
+        protected BaseApiBuilder initialValue() {
+            BaseApiBuilder baseApiBuilderThread = new BaseApiBuilder();
+            baseApiBuilderThreadPool.add(baseApiBuilderThread);
+            return baseApiBuilderThread;
+        }
+    };
+
+    public static BaseApiBuilder getBaseApiBuilder(){
+        BaseApiBuilder baseApiBuilder = baseApiBuildersThreads.get();
+        return baseApiBuilder;
+    }
 
     public String getJsonResponseSchema() {
-        return jsonResponseSchema;
+        return getBaseApiBuilder().jsonResponseSchema;
     }
 
     public void setJsonResponseSchema(String jsonResponseSchema) {
-        this.jsonResponseSchema = jsonResponseSchema;
+        getBaseApiBuilder().jsonResponseSchema = jsonResponseSchema;
     }
 
     public Boolean getMtlsCertificateflag() {
-        return mtlsCertificateflag;
+        return getBaseApiBuilder().mtlsCertificateflag;
     }
 
     public void setMtlsCertificateflag(Boolean mtlsCertificateflag) {
-        this.mtlsCertificateflag = mtlsCertificateflag;
+        getBaseApiBuilder().mtlsCertificateflag = mtlsCertificateflag;
     }
 
     public void setMtlsCertificate(String mtlsCertificate, String caCertificate,String mtlsCertificatePassword) {
@@ -94,250 +89,256 @@ public class BaseApi {
 
 
     public KeyStore getKeyStore() {
-        return keyStore;
+        return getBaseApiBuilder().keyStore;
     }
 
     public Boolean getRedirectFlag() {
-        return redirectFlag;
+        return getBaseApiBuilder().redirectFlag;
     }
 
     public void setRedirectFlag(Boolean redirectFlag) {
-        this.redirectFlag = redirectFlag;
+        getBaseApiBuilder().redirectFlag = redirectFlag;
 
     }
 
     public Boolean getCaptureAPIDetails() {
-        return captureAPIDetails;
+        return getBaseApiBuilder().captureAPIDetails;
     }
 
     public void setCaptureAPIDetails(Boolean captureAPIDetails) {
-        this.captureAPIDetails = captureAPIDetails;
+        getBaseApiBuilder().captureAPIDetails = captureAPIDetails;
     }
 
     public MethodType getMethod() {
-        return method;
+        return getBaseApiBuilder().method;
     }
 
     public void setMethod(MethodType method) {
-        this.method = method;
+        getBaseApiBuilder().method = method;
     }
 
     public void setBody(Object obj) {
-        this.body = obj;
-        requestSpecBuilder.setBody(obj);
+        getBaseApiBuilder().body = obj;
+        getBaseApiBuilder().requestSpecBuilder.setBody(obj);
     }
 
     public void setBody(byte[] obj) {
-        this.body = obj;
-        requestSpecBuilder.setBody(obj);
+        getBaseApiBuilder().body = obj;
+        getBaseApiBuilder().requestSpecBuilder.setBody(obj);
     }
 
     public void setBasicAuth(String userName, String password) {
         PreemptiveBasicAuthScheme authScheme = new PreemptiveBasicAuthScheme();
         authScheme.setUserName(userName);
         authScheme.setPassword(password);
-        requestSpecBuilder.setAuth(authScheme);
+        getBaseApiBuilder().requestSpecBuilder.setAuth(authScheme);
     }
 
     public Object getBody() {
-        return this.body;
+        return getBaseApiBuilder().body;
     }
 
     public void setContentType(ContentType contentType) {
-        this.contentType = contentType;
-        requestSpecBuilder.setContentType(contentType.getContentType());
+        getBaseApiBuilder().contentType = contentType;
+        getBaseApiBuilder().requestSpecBuilder.setContentType(contentType.getContentType());
 
     }
 
     public ContentType getContentType() {
-        return this.contentType;
+        return getBaseApiBuilder().contentType;
     }
 
 
     public void setBaseUri(String baseUri) {
-        this.baseUri = baseUri;
-        requestSpecBuilder.setBaseUri(baseUri);
+        getBaseApiBuilder().baseUri = baseUri;
+        getBaseApiBuilder().requestSpecBuilder.setBaseUri(baseUri);
     }
 
     public String getBaseUri() {
-        return this.baseUri;
+        return getBaseApiBuilder().baseUri;
     }
 
     public void setCookie(String cookie) {
-        this.cookie = cookie;
-        requestSpecBuilder.addCookie(cookie);
+        getBaseApiBuilder().cookie = cookie;
+        getBaseApiBuilder().requestSpecBuilder.addCookie(cookie);
     }
 
     public String getCookie() {
-        return this.cookie;
+        return getBaseApiBuilder().cookie;
     }
 
 
     public void setBasePath(String basePath) {
-        this.basePath = basePath;
-        requestSpecBuilder.setBasePath(basePath);
+        getBaseApiBuilder().basePath = basePath;
+        getBaseApiBuilder().requestSpecBuilder.setBasePath(basePath);
     }
 
     public String getBasePath() {
-        return this.basePath;
+        return getBaseApiBuilder().basePath;
     }
 
     public void addHeaders(Map<String, String> headers) {
-        this.headers.putAll(headers);
-        requestSpecBuilder.addHeaders(headers);
+        getBaseApiBuilder().headers.putAll(headers);
+        getBaseApiBuilder().requestSpecBuilder.addHeaders(headers);
     }
 
     public void addHeader(String headerKey, String headerValue) {
-        this.headers.put(headerKey, headerValue);
-        requestSpecBuilder.addHeader(headerKey, headerValue);
+        getBaseApiBuilder().headers.put(headerKey, headerValue);
+        getBaseApiBuilder().requestSpecBuilder.addHeader(headerKey, headerValue);
     }
 
     public Map<String, Object> getHeaders() {
-        return this.headers;
+        return getBaseApiBuilder().headers;
     }
 
 
     public void addQueryParam(String paramKey, Object paramValue) {
-        this.queryParams.put(paramKey, paramValue);
-        requestSpecBuilder.addQueryParam(paramKey, paramValue);
+        getBaseApiBuilder().queryParams.put(paramKey, paramValue);
+        getBaseApiBuilder().requestSpecBuilder.addQueryParam(paramKey, paramValue);
     }
 
     public void addQueryParams(Map<String, String> queryParams) {
-        this.queryParams.putAll(queryParams);
-        requestSpecBuilder.addQueryParams(queryParams);
+        getBaseApiBuilder().queryParams.putAll(queryParams);
+        getBaseApiBuilder().requestSpecBuilder.addQueryParams(queryParams);
     }
 
     public Map<String, Object> getQueryParams() {
-        return this.queryParams;
+        return getBaseApiBuilder().queryParams;
     }
 
 
     public void addPathParam(String paramKey, Object paramValue) {
-        this.pathParams.put(paramKey, paramValue);
-        requestSpecBuilder.addPathParam(paramKey, paramValue);
+        getBaseApiBuilder().pathParams.put(paramKey, paramValue);
+        getBaseApiBuilder().requestSpecBuilder.addPathParam(paramKey, paramValue);
     }
 
-    public String getKeyValue(String keyvalue) {
-        jsonPathevaluator = response.getBody().jsonPath();
+    public String getKeyValue(Response response, String keyvalue) {
+         JsonPath jsonPathevaluator = response.getBody().jsonPath();
         return (jsonPathevaluator.getString(keyvalue));
     }
 
     public void addPathParams(Map<String, String> pathParams) {
-        this.pathParams.putAll(pathParams);
-        requestSpecBuilder.addPathParams(pathParams);
+        getBaseApiBuilder().pathParams.putAll(pathParams);
+        getBaseApiBuilder().requestSpecBuilder.addPathParams(pathParams);
     }
 
     public Map<String, Object> getPathParams() {
-        return this.pathParams;
+        return getBaseApiBuilder().pathParams;
     }
 
 
     public void addFormURLEncoded(String paramKey, Object paramValue) {
-        this.formURLEncoded.put(paramKey, paramValue);
-        requestSpecBuilder.addFormParam(paramKey, paramValue);
+        getBaseApiBuilder().formURLEncoded.put(paramKey, paramValue);
+        getBaseApiBuilder().requestSpecBuilder.addFormParam(paramKey, paramValue);
     }
 
 
     public void addFormURLEncoded(Map<String, Object> formURLEncoded) {
-        this.formURLEncoded.putAll(formURLEncoded);
-        requestSpecBuilder.addFormParams(formURLEncoded);
+        getBaseApiBuilder().formURLEncoded.putAll(formURLEncoded);
+        getBaseApiBuilder().requestSpecBuilder.addFormParams(formURLEncoded);
     }
 
     public Map<String, Object> getFormURLEncoded() {
-        return this.formURLEncoded;
+        return getBaseApiBuilder().formURLEncoded;
     }
 
     public void addParam(String paramKey, Object paramValue) {
-        this.params.put(paramKey, paramValue);
-        requestSpecBuilder.addParam(paramKey, paramValue);
+        getBaseApiBuilder().params.put(paramKey, paramValue);
+        getBaseApiBuilder().requestSpecBuilder.addParam(paramKey, paramValue);
     }
 
     public void addParams(Map<String, String> queryParams) {
-        this.params.putAll(queryParams);
-        requestSpecBuilder.addParams(queryParams);
+        getBaseApiBuilder().params.putAll(queryParams);
+        getBaseApiBuilder().requestSpecBuilder.addParams(queryParams);
     }
 
     public void addMultiPart(String controlName, File file, String mimeType) {
-        requestSpecBuilder.addMultiPart(controlName, file, mimeType);
+        getBaseApiBuilder().requestSpecBuilder.addMultiPart(controlName, file, mimeType);
     }
 
     public void addMultiPart(String controlName, File file) {
-        requestSpecBuilder.addMultiPart(controlName, file);
+        getBaseApiBuilder().requestSpecBuilder.addMultiPart(controlName, file);
     }
 
     public void addMultiPart(String controlName, String contentBody) {
-        requestSpecBuilder.addMultiPart(controlName, contentBody);
+        getBaseApiBuilder().requestSpecBuilder.addMultiPart(controlName, contentBody);
     }
 
     public void addMultiPart(String controlName, String contentBody, String mimeType) {
-        requestSpecBuilder.addMultiPart(controlName, contentBody, mimeType);
+        getBaseApiBuilder().requestSpecBuilder.addMultiPart(controlName, contentBody, mimeType);
     }
 
     public Map<String, Object> getParams() {
-        return this.params;
+        return getBaseApiBuilder().params;
     }
 
-    public RequestSpecBuilder getRequestSpecBuilder() {
-        return requestSpecBuilder;
-    }
+/*    public RequestSpecBuilder getRequestSpecBuilder() {
+        return getRequestSpecBuilder();
+    }*/
 
 
     public Response execute() {
-        RequestSpecification requestSpecification = requestSpecBuilder.addFilter(new RequestLoggingFilter())
-                .addFilter(new ResponseLoggingFilter()).build();
-        Response response;
-        RestAssured.defaultParser = Parser.JSON;
-        RestAssuredConfig config = new CurlLoggingRestAssuredConfigBuilder(captureAPIDetails).build();
-        if (this.getMtlsCertificateflag()) {
-            Logger.logInfoInLogger("MTLS certificate flag is true");
-            config = RestAssured.config().sslConfig(MtlsCertificateConfig.getInstance().getSSLconfig());
-            Logger.logInfoInLogger("SSL Configs are \n" + config.getSSLConfig());
-        }
+        try {
+            RequestSpecification requestSpecification = getBaseApiBuilder().requestSpecBuilder.addFilter(new RequestLoggingFilter())
+                    .addFilter(new ResponseLoggingFilter()).build();
+            Response response;
+            RestAssured.defaultParser = Parser.JSON;
+            RestAssuredConfig config = new CurlLoggingRestAssuredConfigBuilder(getBaseApiBuilder().captureAPIDetails).build();
+            if (this.getMtlsCertificateflag()) {
+                Logger.logInfoInLogger("MTLS certificate flag is true");
+                config = RestAssured.config().sslConfig(MtlsCertificateConfig.getInstance().getSSLconfig());
+                Logger.logInfoInLogger("SSL Configs are \n" + config.getSSLConfig());
+            }
 
-        switch (method) {
-            case GET:
-                response = given().config(config).spec(requestSpecification).when().redirects().follow(redirectFlag).get();
-                break;
-            case POST:
-                response = given().config(config).spec(requestSpecification).when().redirects().follow(redirectFlag).post();
-                break;
-            case PUT:
-                response = given().config(config).spec(requestSpecification).when().redirects().follow(redirectFlag).put();
-                break;
-            case DELETE:
-                response = given().config(config).spec(requestSpecification).when().redirects().follow(redirectFlag).delete();
-                break;
-            case PATCH:
-                response = given().config(config).spec(requestSpecification).when().redirects().follow(redirectFlag).patch();
-                break;
-            case POSTBYTES:
-                response = given().spec(requestSpecification).when().redirects().follow(redirectFlag).post();
-                break;
-            default:
-                throw new RuntimeException("API method not specified");
+            switch (getBaseApiBuilder().method) {
+                case GET:
+                    response = given().config(config).spec(requestSpecification).when().redirects().follow(getBaseApiBuilder().redirectFlag).get();
+                    break;
+                case POST:
+                    response = given().config(config).spec(requestSpecification).when().redirects().follow(getBaseApiBuilder().redirectFlag).post();
+                    break;
+                case PUT:
+                    response = given().config(config).spec(requestSpecification).when().redirects().follow(getBaseApiBuilder().redirectFlag).put();
+                    break;
+                case DELETE:
+                    response = given().config(config).spec(requestSpecification).when().redirects().follow(getBaseApiBuilder().redirectFlag).delete();
+                    break;
+                case PATCH:
+                    response = given().config(config).spec(requestSpecification).when().redirects().follow(getBaseApiBuilder().redirectFlag).patch();
+                    break;
+                case POSTBYTES:
+                    response = given().spec(requestSpecification).when().redirects().follow(getBaseApiBuilder().redirectFlag).post();
+                    break;
+                default:
+                    baseApiBuildersThreads.remove();
+                    throw new RuntimeException("API method not specified");
 
-        }
-        this.response = response;
-        if (captureAPIDetails) {
-            captureAPIDetails();
-            CreateAPIPerfReport createAPIPerfReport = new CreateAPIPerfReport();
-            createAPIPerfReport.captureAPIStatusTimeDTO(basePath, this.response.getTimeIn(TimeUnit.MILLISECONDS));
-        }
+            }
+            if (getBaseApiBuilder().captureAPIDetails) {
+                captureAPIDetails(response);
+                CreateAPIPerfReport createAPIPerfReport = new CreateAPIPerfReport();
+                createAPIPerfReport.captureAPIStatusTimeDTO(getBaseApiBuilder().basePath, response.getTimeIn(TimeUnit.MILLISECONDS));
+            }
 
-        if (getJsonResponseSchema() != "" && Pattern.matches("2..", Integer.toString(response.getStatusCode()))) {
-            JsonSchemaValidation.getInstance().validateSchema(response.getBody().asString(), getJsonResponseSchema());
+            if (getJsonResponseSchema() != "" && Pattern.matches("2..", Integer.toString(response.getStatusCode()))) {
+                JsonSchemaValidation.getInstance().validateSchema(response.getBody().asString(), getJsonResponseSchema());
+            }
+            baseApiBuildersThreads.remove();
+            return response;
+        }catch(Exception e){
+            baseApiBuildersThreads.remove();
+            throw e;
         }
-        return response;
     }
 
-    public void captureAPIDetails() {
-        if (this.response != null) {
-            Logger.logInfo("Response is " + this.response.asString());
-            Logger.logInfo("Response Status Code = " + this.response.getStatusCode());
-            Logger.logInfo("Response time consumed is = " + this.response.getTimeIn(TimeUnit.MILLISECONDS));
+    public void captureAPIDetails(Response response) {
+        if (response != null) {
+            Logger.logInfo("Response is " + response.asString());
+            Logger.logInfo("Response Status Code = " + response.getStatusCode());
+            Logger.logInfo("Response time consumed is = " + response.getTimeIn(TimeUnit.MILLISECONDS));
         }
-        if (this.response.getHeaders() != null) {
-            Logger.logInfo("Response Headers are " + this.response.getHeaders().toString());
+        if (response.getHeaders() != null) {
+            Logger.logInfo("Response Headers are " + response.getHeaders().toString());
         }
     }
 

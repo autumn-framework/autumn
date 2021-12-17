@@ -7,7 +7,7 @@
     <groupId>io.github.autumn-framework</groupId>
     <artifactId>autumn</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <modules>
         <module>autumn-reporting</module>
         <module>autumn-utils</module>
@@ -438,6 +438,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.20</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.wnameless</groupId>
+            <artifactId>json-flattener</artifactId>
+            <version>0.7.1</version>
         </dependency>
     </dependencies>
 </project>
