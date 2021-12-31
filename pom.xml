@@ -7,7 +7,7 @@
     <groupId>io.github.autumn-framework</groupId>
     <artifactId>autumn</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <modules>
         <module>autumn-reporting</module>
         <module>autumn-utils</module>
@@ -61,14 +61,13 @@
         <compiler.version>11</compiler.version>
         <buildNumber>${maven.build.timestamp}</buildNumber>
         <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
-        <io.rest-assured.version>4.3.1</io.rest-assured.version>
-        <org.testng.version>7.1.0</org.testng.version>
-        <com.fasterxml.jackson.version>2.5.2</com.fasterxml.jackson.version>
-        <com.aventstack.version>5.0.3</com.aventstack.version>
-        <org.apache.logging.log4j.version>2.11.0</org.apache.logging.log4j.version>
+        <io.rest-assured.version>4.4.0</io.rest-assured.version>
+        <org.testng.version>7.4.0</org.testng.version>
+        <com.fasterxml.jackson.version>2.12.5</com.fasterxml.jackson.version>
+        <com.aventstack.version>5.0.9</com.aventstack.version>
         <javax.mail.version>1.4</javax.mail.version>
-        <commons-io.version>2.7</commons-io.version>
-        <mysql.version>5.1.39</mysql.version>
+        <commons-io.version>2.11.0</commons-io.version>
+        <mysql.version>8.0.27</mysql.version>
         <commons-dbutils.version>1.7</commons-dbutils.version>
         <com.opencsv.version>3.3</com.opencsv.version>
         <org.mongodb.version>3.12.5</org.mongodb.version>
@@ -76,9 +75,10 @@
         <com.auth0.version>3.10.3</com.auth0.version>
         <com.jcraft.version>0.1.51</com.jcraft.version>
         <org.seleniumhq.selenium.version>3.141.59</org.seleniumhq.selenium.version>
-        <org.slf4j.version>1.7.30</org.slf4j.version>
+        <org.slf4j.version>1.7.32</org.slf4j.version>
         <io.github.bonigarcia.version>4.2.0</io.github.bonigarcia.version>
         <org.jasypt.version>1.9.3</org.jasypt.version>
+        <org.apache.logging.log4j.version>2.17.0</org.apache.logging.log4j.version>
         <org.bouncycastle.version>1.69</org.bouncycastle.version>
         <cucumber.version>1.2.5</cucumber.version>
     </properties>
@@ -345,7 +345,6 @@
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-picocontainer</artifactId>
             <version>${cucumber.version}</version>
-            <scope>test</scope>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/info.cukes/cucumber-testng -->
@@ -407,7 +406,7 @@
         <dependency>
             <groupId>org.apache.avro</groupId>
             <artifactId>avro</artifactId>
-            <version>1.10.2</version>
+            <version>1.11.0</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
